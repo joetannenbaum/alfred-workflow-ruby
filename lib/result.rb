@@ -1,9 +1,18 @@
 class Result
 
     def initialize
-        @valid = true
-        @text = {}
+        @arg = nil
+        @autocomplete = nil
+        @icon = nil
         @mods = {}
+        @quicklookurl = nil
+        @subtitle = nil
+        @text = {}
+        @title = nil
+        @type = nil
+        @uid = nil
+        @valid = true
+
         @valid_values = {
             type: ['default', 'file', 'file:skipcheck'],
             icon: ['fileicon', 'filetype'],
