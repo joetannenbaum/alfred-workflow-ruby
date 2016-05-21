@@ -110,7 +110,7 @@ class Result
         @mods[mod.to_sym] = {
             subtitle: subtitle,
             arg: arg,
-            valid: subtitle
+            valid: valid
         }
 
         self
@@ -119,17 +119,17 @@ class Result
     public
     def to_hash
         keys = [
-            'uid',
             'arg',
             'autocomplete',
-            'title',
-            'subtitle',
-            'type',
-            'valid',
-            'quicklookurl',
             'icon',
             'mods',
+            'quicklookurl',
+            'subtitle',
             'text',
+            'title',
+            'type',
+            'uid',
+            'valid',
         ]
 
         result = {}

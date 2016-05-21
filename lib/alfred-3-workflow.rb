@@ -1,5 +1,5 @@
-require_relative 'workflow'
-require_relative 'result'
+require 'workflow'
+require 'result'
 require 'json'
 
 workflow = Workflow.new
