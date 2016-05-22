@@ -1,7 +1,7 @@
 require 'minitest/autorun'
 require 'alfred-3_workflow'
 
-class TestWorkflow < Minitest::Test
+class TestWorkflow < MiniTest::Test
   def setup
     @workflow = Alfred3::Workflow.new
   end
