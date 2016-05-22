@@ -25,7 +25,20 @@ module Alfred3
 
                 multiplier = direction === 'asc' ? 1 : -1
 
-                r1_prop <=> r2_prop * multiplier
+                (r1_prop <=> r2_prop) * multiplier
+            }
+
+            self
+        end
+
+        public
+        def filter_results(query, property = 'title')
+            query = query.to_s.strip.downcase
+
+            return self if query.length === 0
+
+            @results.select! { |result|
+                result.instance_variable_get("@#{property}").downcase.include? query
             }
 
             self

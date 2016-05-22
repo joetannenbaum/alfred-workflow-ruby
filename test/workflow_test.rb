@@ -245,4 +245,116 @@ class TestWorkflow < MiniTest::Test
 
     assert_equal expected.to_json, @workflow.sort_results.output
   end
+
+  def test_that_it_can_sort_results_desc
+    @workflow.result
+                .uid('THE ID')
+                .title('Item Title')
+                .subtitle('Item Subtitle')
+
+    @workflow.result
+                .uid('THE ID 2')
+                .title('Item Title 2')
+                .subtitle('Item Subtitle 2')
+
+    expected = {
+      'items' => [
+        {
+            'subtitle'     => 'Item Subtitle 2',
+            'title'        => 'Item Title 2',
+            'uid'          => 'THE ID 2',
+            'valid'        => true,
+        },
+        {
+            'subtitle'     => 'Item Subtitle',
+            'title'        => 'Item Title',
+            'uid'          => 'THE ID',
+            'valid'        => true,
+        }
+      ]
+    }
+
+    assert_equal expected.to_json, @workflow.sort_results('desc').output
+  end
+
+  def test_that_it_can_sort_results_by_field
+    @workflow.result
+                .uid('456')
+                .title('Item Title')
+                .subtitle('Item Subtitle')
+
+    @workflow.result
+                .uid('123')
+                .title('Item Title 2')
+                .subtitle('Item Subtitle 2')
+
+    expected = {
+      'items' => [
+        {
+            'subtitle'     => 'Item Subtitle 2',
+            'title'        => 'Item Title 2',
+            'uid'          => '123',
+            'valid'        => true,
+        },
+        {
+            'subtitle'     => 'Item Subtitle',
+            'title'        => 'Item Title',
+            'uid'          => '456',
+            'valid'        => true,
+        }
+      ]
+    }
+
+    assert_equal expected.to_json, @workflow.sort_results('asc', 'uid').output
+  end
+
+  def test_that_it_can_filter_results
+    @workflow.result
+                .uid('456')
+                .title('Item Title')
+                .subtitle('Item Subtitle')
+
+    @workflow.result
+                .uid('123')
+                .title('Item Title 2')
+                .subtitle('Item Subtitle 2')
+
+    expected = {
+      'items' => [
+        {
+            'subtitle'     => 'Item Subtitle 2',
+            'title'        => 'Item Title 2',
+            'uid'          => '123',
+            'valid'        => true,
+        }
+      ]
+    }
+
+    assert_equal expected.to_json, @workflow.filter_results('Title 2').output
+  end
+
+  def test_that_it_can_filter_results_by_property
+    @workflow.result
+                .uid('456')
+                .title('Item Title')
+                .subtitle('Item Subtitle')
+
+    @workflow.result
+                .uid('123')
+                .title('Item Title 2')
+                .subtitle('Item Subtitle 2')
+
+    expected = {
+      'items' => [
+        {
+            'subtitle'     => 'Item Subtitle',
+            'title'        => 'Item Title',
+            'uid'          => '456',
+            'valid'        => true,
+        }
+      ]
+    }
+
+    assert_equal expected.to_json, @workflow.filter_results(45, 'uid').output
+  end
 end
