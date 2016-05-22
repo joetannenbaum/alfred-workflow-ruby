@@ -137,6 +137,10 @@ class Result
   end
 
   def respond_to?(method, include_private = false)
+    if @simple_values.include?(method.to_s)
+      return true
+    end
+
     if @valid_values[:mod].include?(method.to_s)
       return true
     end
