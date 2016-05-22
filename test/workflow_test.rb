@@ -1,11 +1,9 @@
 require 'minitest/autorun'
-require 'workflow'
-require 'result'
-require 'json'
+require 'alfred-3_workflow'
 
 class TestWorkflow < Minitest::Test
   def setup
-    @workflow = Workflow.new
+    @workflow = Alfred3::Workflow.new
   end
 
   def test_that_it_can_add_a_result
