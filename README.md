@@ -20,7 +20,7 @@ The library is not doing any validation for required properties, so all of the f
 ```ruby
 require 'alfred-3_workflow'
 
-workflow = Alfred3::workflow.new
+workflow = Alfred3::Workflow.new
 
 workflow.result
         .uid('bob-belcher')

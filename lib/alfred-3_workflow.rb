@@ -19,13 +19,16 @@ module Alfred3
 
         public
         def sort_results(direction = 'asc', property = 'title')
-            @results.sort { |r1, r2|
-                if direction === 'asc'
-                    return r1[property.to_sym] <=> r2[property.to_sym]
-                end
+            @results.sort! { |r1, r2|
+                r1_prop = r1.instance_variable_get("@#{property}")
+                r2_prop = r2.instance_variable_get("@#{property}")
 
-                r2[property.to_sym] <=> r1[property.to_sym]
+                multiplier = direction === 'asc' ? 1 : -1
+
+                r1_prop <=> r2_prop * multiplier
             }
+
+            self
         end
 
         public

@@ -214,4 +214,35 @@ class TestWorkflow < MiniTest::Test
 
     assert_equal expected.to_json, @workflow.output
   end
+
+  def test_that_it_can_sort_results_by_defaults
+    @workflow.result
+                .uid('THE ID 2')
+                .title('Item Title 2')
+                .subtitle('Item Subtitle 2')
+
+    @workflow.result
+                .uid('THE ID')
+                .title('Item Title')
+                .subtitle('Item Subtitle')
+
+    expected = {
+      'items' => [
+        {
+            'subtitle'     => 'Item Subtitle',
+            'title'        => 'Item Title',
+            'uid'          => 'THE ID',
+            'valid'        => true,
+        },
+        {
+            'subtitle'     => 'Item Subtitle 2',
+            'title'        => 'Item Title 2',
+            'uid'          => 'THE ID 2',
+            'valid'        => true,
+        }
+      ]
+    }
+
+    assert_equal expected.to_json, @workflow.sort_results.output
+  end
 end

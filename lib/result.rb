@@ -13,6 +13,15 @@ class Result
         @uid = nil
         @valid = true
 
+        @simple_values = [
+            'arg',
+            'autocomplete',
+            'quicklookurl',
+            'subtitle',
+            'title',
+            'uid',
+        ]
+
         @valid_values = {
             type: ['default', 'file', 'file:skipcheck'],
             icon: ['fileicon', 'filetype'],
@@ -59,48 +68,6 @@ class Result
     public
     def filetype_icon(path)
         icon(path, 'filetype')
-    end
-
-    public
-    def subtitle(subtitle)
-        @subtitle = subtitle
-
-        self
-    end
-
-    public
-    def title(title)
-        @title = title
-
-        self
-    end
-
-    public
-    def uid(uid)
-        @uid = uid
-
-        self
-    end
-
-    public
-    def quicklookurl(quicklookurl)
-        @quicklookurl = quicklookurl
-
-        self
-    end
-
-    public
-    def arg(arg)
-        @arg = arg
-
-        self
-    end
-
-    public
-    def autocomplete(autocomplete)
-        @autocomplete = autocomplete
-
-        self
     end
 
     public
@@ -153,6 +120,11 @@ class Result
     end
 
     def method_missing(method, *arguments)
+        if @simple_values.include?(method.to_s)
+            self.instance_variable_set("@#{method}", arguments.first)
+            return self
+        end
+
         if @valid_values[:mod].include?(method.to_s)
             return mod(method, *arguments)
         end
@@ -160,6 +132,20 @@ class Result
         if @valid_values[:text].include?(method.to_s)
             return text(method, *arguments)
         end
+
+        super
+    end
+
+    def respond_to?(method, include_private = false)
+        if @valid_values[:mod].include?(method.to_s)
+            return true
+        end
+
+        if @valid_values[:text].include?(method.to_s)
+            return true
+        end
+
+        super
     end
 
 end
