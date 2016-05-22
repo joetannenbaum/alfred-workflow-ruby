@@ -10,7 +10,7 @@ Gem::Specification.new do |s|
   s.homepage    =
     'https://github.com/joetannenbaum/alfred-workflow-ruby'
   s.license       = 'MIT'
-  s.add_development_dependency 'minitest', '~> 5.9.0'
+  s.add_dependency 'minitest', '~> 5.9.0'
   gem 'rake', :group => :test
   gem 'minitest', :group => :test
 end
